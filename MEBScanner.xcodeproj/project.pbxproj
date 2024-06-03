@@ -18,6 +18,7 @@
 		2E4D54332BA8B95A00AA5C7B /* CircleGaugeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D54322BA8B95A00AA5C7B /* CircleGaugeStyle.swift */; };
 		2E4D54352BA8B9BE00AA5C7B /* CircleGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D54342BA8B9BE00AA5C7B /* CircleGauge.swift */; };
 		2E4D54372BA8BE6700AA5C7B /* PID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D54362BA8BE6700AA5C7B /* PID.swift */; };
+		2EB4A7A02C0DF99A007E22DE /* CommandOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4A79F2C0DF99A007E22DE /* CommandOperation.swift */; };
 		2ECCED8A2C0CC9C90000A892 /* PIDValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECCED892C0CC9C90000A892 /* PIDValue.swift */; };
 		2ED1D1952BAEFB7200ACD58D /* ABRPPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1D1942BAEFB7200ACD58D /* ABRPPayload.swift */; };
 		2ED1D1972BAF319200ACD58D /* PRNDBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1D1962BAF319200ACD58D /* PRNDBStatus.swift */; };
@@ -48,6 +49,7 @@
 		2E4D54322BA8B95A00AA5C7B /* CircleGaugeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleGaugeStyle.swift; sourceTree = "<group>"; };
 		2E4D54342BA8B9BE00AA5C7B /* CircleGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleGauge.swift; sourceTree = "<group>"; };
 		2E4D54362BA8BE6700AA5C7B /* PID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PID.swift; sourceTree = "<group>"; };
+		2EB4A79F2C0DF99A007E22DE /* CommandOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandOperation.swift; sourceTree = "<group>"; };
 		2ECCED892C0CC9C90000A892 /* PIDValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIDValue.swift; sourceTree = "<group>"; };
 		2ED1D1942BAEFB7200ACD58D /* ABRPPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABRPPayload.swift; sourceTree = "<group>"; };
 		2ED1D1962BAF319200ACD58D /* PRNDBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRNDBStatus.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				2EE434022B53032100D918CE /* Assets.xcassets */,
 				2E26E7782BA70FC300B52CB2 /* Extensions.swift */,
 				2EE434042B53032100D918CE /* Preview Content */,
+				2EB4A79F2C0DF99A007E22DE /* CommandOperation.swift */,
 			);
 			path = MEBScanner;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				2ED2E3402B826F650043B8B7 /* TerminalViewViewModel.swift in Sources */,
 				2E26E7722BA657A500B52CB2 /* OBDManagerMock.swift in Sources */,
 				2E0FB20B2B61821000B7EBE2 /* MessageView.swift in Sources */,
+				2EB4A7A02C0DF99A007E22DE /* CommandOperation.swift in Sources */,
 				2ED2E3422B8B381E0043B8B7 /* SettingsView.swift in Sources */,
 				2ED1D1952BAEFB7200ACD58D /* ABRPPayload.swift in Sources */,
 				2E4D54352BA8B9BE00AA5C7B /* CircleGauge.swift in Sources */,

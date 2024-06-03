@@ -33,7 +33,7 @@ struct PID: Hashable {
         .drivingMode: PID(command: "22210E", endByte: 10),
 
         .batterySoc: PID(command: "22028C") { intValue in
-            (Double(intValue))/2.5
+            (Double(intValue))/2.55
         },
         .batteryVoltage: PID(command: "221E3B", endByte: 10) { intValue in
             (Double(intValue))/4
@@ -57,11 +57,15 @@ struct PID: Hashable {
         .auxillaryPower: PID(command: "220364", header: "FC0076")
     ]
     
-    static func parse(response: String, command: String) -> PIDValue {
+    static func parse(response: String, command: String) throws -> PIDValue {
+        if response.contains("NO DATA") || response.contains("?") || response.contains("???") || response.contains("CAN ERROR"){
+            throw PIDError.InvalidResponse(response: response, command: command, pid: PIDParameter.init(rawValue: command))
+        }
         let responseWithutSpaces = response.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\r", with: "")
         print("PARSER DEBUG RAW: \(command): \(responseWithutSpaces)")
         print(PIDParameter.init(rawValue: command).debugDescription)
         
+
         let pid = self.parameters[PIDParameter.init(rawValue: command)!]
         if pid != nil {
             let hexValue = responseWithutSpaces.substring(with: pid!.startByte..<pid!.endByte)
@@ -88,7 +92,12 @@ enum DrivingMode: Int{
     case n = 6
 }
 
-enum PIDParameter: String {
+enum PIDError: Error {
+    case InvalidResponse(response: String, command: String, pid: PIDParameter?)
+}
+
+
+enum PIDParameter: String, CaseIterable {
     case batterySoc = "22028C"
     case speedKmph = "22F40D"
     case operationMode = "227448"

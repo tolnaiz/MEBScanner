@@ -19,10 +19,11 @@ class TerminalViewViewModel: ObservableObject {
     func send(){
         self.messages.append(TerminalMessage(message: self.text))
         let text = self.text
-        DispatchQueue.main.async {
-            let message = self.manager.request(message:text)
-            print("terminal message received: \(self.text) \(message)")
-            self.messages.append(TerminalMessage(message: message))
+        manager.request(message:text) { response in
+            DispatchQueue.main.async{
+                print("terminal message received: \(self.text) \(response)")
+                self.messages.append(TerminalMessage(message: response))
+            }
         }
         self.text = ""
     }

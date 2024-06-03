@@ -32,13 +32,15 @@ class OBDManagerMock: OBDManager{
         return sharedManager
     }
     
-    override func request(message: String) -> String {
+    override func request(message: String, action: ((String) -> Void)? = nil) {
         debugPrint("Mock received: \(message)")
         var response = "???"
         if testValues.keys.contains(message){
             response = testValues[message]?.randomElement() ?? "???"
         }
-        return response
+        if action != nil {
+            action!(response)
+        }
     }
     
     override func connect(){

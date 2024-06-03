@@ -61,41 +61,42 @@ class CommandSender: ObservableObject{
             self.timer1s = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
                 let slowSubs = self.subscriptions.filter {$0.interval == .slow }
                 
-                let subsByHeader = Dictionary(grouping: slowSubs) { $0.pid.header }
-                for header in subsByHeader.keys {
-                    self.manager.request(message: "ATSH\(header)")
-                    let subsByCommand = Dictionary(grouping: subsByHeader[header]!) { $0.pid.command }
-                    for command in subsByCommand.keys {
-                        let response = self.manager.request(message: command)
-                        print("sending \(command)")
-                        for sub in subsByCommand[command]! {
-                            sub.action(PID.parse(response: response, command: command))
-                        }
-                    }
-                }
+                self.sendCommands(subs:slowSubs)
             })
             self.timer100ms = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
                 let fastSubs = self.subscriptions.filter {$0.interval == .fast }
-                
-                let subsByHeader = Dictionary(grouping: fastSubs) { $0.pid.header }
-                for header in subsByHeader.keys {
-                    self.manager.request(message: "ATSH\(header)")
-                    let subsByCommand = Dictionary(grouping: subsByHeader[header]!) { $0.pid.command }
-                    for command in subsByCommand.keys {
-                        let response = self.manager.request(message: command)
-                        print("sending \(command)")
-                        for sub in subsByCommand[command]! {
-                            sub.action(PID.parse(response: response, command: command))
+                self.sendCommands(subs:fastSubs)
+            })
+        }
+    }
+    
+    func sendCommands(subs: Set<Subscription>){
+        let subsByHeader = Dictionary(grouping: subs) { $0.pid.header }
+        for header in subsByHeader.keys {
+            self.manager.request(message: "ATSH\(header)")
+            let subsByCommand = Dictionary(grouping: subsByHeader[header]!) { $0.pid.command }
+            for command in subsByCommand.keys {
+                print("sending \(command)")
+                self.manager.request(message: command) { response in
+                    for sub in subsByCommand[command]! {
+                        do{
+                            let pidvalue = try PID.parse(response: response, command: command)
+                            sub.action(pidvalue)
+                        } catch PIDError.InvalidResponse(response: let r, command: let c, pid: _) {
+                            print("RESPONSE ERROR: \(c): \(r)")
+                        } catch {
+                            
                         }
                     }
                 }
-            })
+            }
         }
     }
     
     func stop(){
         self.timer1s?.invalidate()
         self.timer100ms?.invalidate()
+        manager.cancellAllOperations()
     }
     
     func subscribePID(subscription: Subscription){

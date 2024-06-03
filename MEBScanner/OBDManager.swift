@@ -1,18 +1,17 @@
 import Foundation
 import ExternalAccessory
 
-class OBDManager: ObservableObject, ConnectionChangedDelegate, ReportDelegate{
+class OBDManager: ObservableObject, ConnectionChangedDelegate{
     @Published var connected: Bool = false
     @Published var connectedDevices: [EAAccessory] = []
 
     var connection: Connection? = nil
-    private let semaphore = DispatchSemaphore(value: 0)
-
-    var response: String?
+    
+    var currentHeader: String?
     
     private static var sharedManager: OBDManager = {
-            let manager = OBDManager()
-            return manager
+        let manager = OBDManager()
+        return manager
     }()
     
     class func shared() -> OBDManager {
@@ -26,38 +25,20 @@ class OBDManager: ObservableObject, ConnectionChangedDelegate, ReportDelegate{
         }
     }
     
-    func request(message: String) -> String {
-        send(message: message)
-        semaphore.wait()
-        return response ?? ""
-    }
-    
-    func send(message: String) {
-        connection?.write(str: message.appending("\r"))
-    }
-    
-    func reportReceived(report: [UInt8]) {
-        response = String(bytes: report, encoding: .isoLatin1)
-        var rows = response!.components(separatedBy: "\r").filter({ $0 != ">" && $0 != ""})
-        print(rows)
-        
-        if rows.count > 1 {
-            rows = rows.map {
-                if $0[1] == ":" {
-                    return String($0.dropFirst(2))
-                }else{
-                    return $0
-                }
-            }
-        }
-        response = rows.joined(separator: "\r")
-        semaphore.signal()
+    func request(message: String, action: ((String) -> Void)? = nil){
+//        if !message.starts(with: "ATSH") || message != currentHeader {
+//            currentHeader = message
+//            
+//        }
+        connection?.write(str: message.appending("\r"), action: action)
     }
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(accessoryConnected), name: NSNotification.Name.EAAccessoryDidConnect, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(accessoryDisconnected), name: NSNotification.Name.EAAccessoryDidDisconnect, object: nil)
         EAAccessoryManager.shared().registerForLocalNotifications()
+        let man = EAAccessoryManager.shared()
+        connectedDevices = man.connectedAccessories
     }
     
     func connect() {
@@ -68,11 +49,11 @@ class OBDManager: ObservableObject, ConnectionChangedDelegate, ReportDelegate{
             print(tmpAccessory.manufacturer)
             print(tmpAccessory.modelNumber)
             connection = Connection(accessory: tmpAccessory)
-            connection?.addReportDelegate(self)
             connection?.addConnectionChangedDelegate(delegate: self)
             connection?.open()
         }
-        initialize()
+        self.initialize()
+        
     }
     
     func initialize() {
@@ -90,6 +71,10 @@ class OBDManager: ObservableObject, ConnectionChangedDelegate, ReportDelegate{
     func disconnect() {
         connection?.close()
         connection = nil
+    }
+    
+    func cancellAllOperations(){
+        connection?.cancellAllOperations()
     }
     
     @objc private func accessoryConnected(notification: NSNotification) {
