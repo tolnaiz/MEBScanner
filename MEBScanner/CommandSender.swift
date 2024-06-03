@@ -78,16 +78,14 @@ class CommandSender: ObservableObject{
             for command in subsByCommand.keys {
                 print("sending \(command)")
                 self.manager.request(message: command) { response in
-                    for sub in subsByCommand[command]! {
-                        do{
-                            let pidvalue = try PID.parse(response: response, command: command)
+                    do{
+                        let pidvalue = try PID.parse(response: response, command: command)
+                        for sub in subsByCommand[command]! {
                             sub.action(pidvalue)
-                        } catch PIDError.InvalidResponse(response: let r, command: let c, pid: _) {
-                            print("RESPONSE ERROR: \(c): \(r)")
-                        } catch {
-                            
                         }
-                    }
+                    } catch PIDError.InvalidResponse(response: let r, command: let c, pid: _) {
+                        print("RESPONSE ERROR: \(c): \(r)")
+                    } catch { }
                 }
             }
         }
