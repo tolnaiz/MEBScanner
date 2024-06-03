@@ -121,6 +121,17 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		2EB4A7A12C0E200E007E22DE /* OBD */ = {
+			isa = PBXGroup;
+			children = (
+				2E0FB2472B63B81200B7EBE2 /* OBDManager.swift */,
+				2E0FB2452B63B28400B7EBE2 /* Connection.swift */,
+				2E4D54362BA8BE6700AA5C7B /* PID.swift */,
+				2EB4A79F2C0DF99A007E22DE /* CommandOperation.swift */,
+			);
+			path = OBD;
+			sourceTree = "<group>";
+		};
 		2ED2E33D2B826F2E0043B8B7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,19 +164,16 @@
 				2E26E7752BA6F8B500B52CB2 /* Model */,
 				2E26E7732BA657B200B52CB2 /* Mock */,
 				2ED2E33D2B826F2E0043B8B7 /* ViewModel */,
-				2E0FB2492B641E0D00B7EBE2 /* Info.plist */,
 				2E26E7742BA6F83200B52CB2 /* Components */,
 				2E0FB2092B6181FD00B7EBE2 /* Screens */,
-				2EE433FE2B53032000D918CE /* MEBScannerApp.swift */,
+				2EB4A7A12C0E200E007E22DE /* OBD */,
 				2ED2E3452B8B51930043B8B7 /* MainView.swift */,
-				2E0FB2472B63B81200B7EBE2 /* OBDManager.swift */,
 				2EF543CC2BE5549F003BF172 /* CommandSender.swift */,
-				2E0FB2452B63B28400B7EBE2 /* Connection.swift */,
-				2E4D54362BA8BE6700AA5C7B /* PID.swift */,
-				2EE434022B53032100D918CE /* Assets.xcassets */,
 				2E26E7782BA70FC300B52CB2 /* Extensions.swift */,
+				2EE433FE2B53032000D918CE /* MEBScannerApp.swift */,
+				2EE434022B53032100D918CE /* Assets.xcassets */,
+				2E0FB2492B641E0D00B7EBE2 /* Info.plist */,
 				2EE434042B53032100D918CE /* Preview Content */,
-				2EB4A79F2C0DF99A007E22DE /* CommandOperation.swift */,
 			);
 			path = MEBScanner;
 			sourceTree = "<group>";
