@@ -39,7 +39,7 @@ struct TerminalView: View {
             }
         
             HStack{
-                TextField("Enter text here", text: $viewModel.text, axis: .vertical)
+                TextField("Enter a command", text: $viewModel.text, axis: .vertical)
                     .padding().textFieldStyle(.roundedBorder)
                 Button ("Send",action: {
                     viewModel.send()
