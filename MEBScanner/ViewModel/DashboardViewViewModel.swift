@@ -24,7 +24,7 @@ class DashboardViewViewModel: ObservableObject {
         voltage * current / 1000
     }
     var displaySoc: Double {
-        batterySoc * 2.5 * 0.505 - 9.0947
+        batterySoc * 1.2625 - 9.0947
     }
     var battPTCHeaterPower: Double {
         voltage * battPTCHeaterCurrent / 1000
