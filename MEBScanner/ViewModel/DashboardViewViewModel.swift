@@ -10,14 +10,14 @@ import Foundation
 class DashboardViewViewModel: ObservableObject {
     @Published var voltage: Double = 0
     @Published var current: Double = 0
-    @Published var batterySoc: Double = 55
-    @Published var drivingMode: DrivingMode = .p
+    @Published var batterySoc: Double = 0
+    @Published var drivingMode: DrivingMode = .n
     @Published var operationMode: OperationMode = .standBy
     @Published var battMinTemp: Double = 20
     @Published var battMaxTemp: Double = 25
-    @Published var battInletTemp: Double = 30
-    @Published var battPTCHeaterCurrent: Double = 4
-    @Published var circPump: Int = 4
+    @Published var battInletTemp: Double = 22
+    @Published var battPTCHeaterCurrent: Double = 0
+    @Published var circPump: Int = 0
     @Published var rv: String = ""
     
     var power: Double {
@@ -29,10 +29,10 @@ class DashboardViewViewModel: ObservableObject {
     var battPTCHeaterPower: Double {
         voltage * battPTCHeaterCurrent / 1000
     }
-    @Published var manager: OBDManager
+    @Published var manager: ConnectionManager
     
     init() {
-        manager = OBDManager.shared()
+        manager = ConnectionManager.shared()
     }
     
     var subscriptions: Set<Subscription> = []
@@ -79,7 +79,7 @@ class DashboardViewViewModel: ObservableObject {
             })
             
             subscriptions.insert(Subscription(pidparam: .drivingMode, interval: .slow) { pidvalue in
-                self.drivingMode = DrivingMode(rawValue: Int(pidvalue.value))!
+                    self.drivingMode = DrivingMode(rawValue: Int(pidvalue.value))!
             })
             
             for item in subscriptions {

@@ -19,7 +19,7 @@ class ConnectionManager: ObservableObject, ConnectionChangedDelegate{
         return sharedManager
     }
  
-    func ConnectionChanged(connected: Bool) {
+    func connectionChanged(connected: Bool) {
         self.connected = connected
         if connected {
             print("Connected: true")
@@ -27,10 +27,6 @@ class ConnectionManager: ObservableObject, ConnectionChangedDelegate{
     }
     
     func request(message: String, action: ((String) -> Void)? = nil){
-//        if !message.starts(with: "ATSH") || message != currentHeader {
-//            currentHeader = message
-//            
-//        }
         connection?.write(str: message.appending("\r"), action: action)
     }
     
@@ -42,26 +38,27 @@ class ConnectionManager: ObservableObject, ConnectionChangedDelegate{
         connectedDevices = man.connectedAccessories
     }
     
-    func connect() {
+    func connect() -> Bool {
         if !testMode {
             let man = EAAccessoryManager.shared()
             let connected = man.connectedAccessories
 
             if connected.isEmpty {
-                return
+                return false
             }
             
             for tmpAccessory in connected{
                 print(tmpAccessory.manufacturer)
                 print(tmpAccessory.modelNumber)
                 connection = OBDConnection(accessory: tmpAccessory)
-                connection?.addConnectionChangedDelegate(delegate: self)
-                connection?.open()
             }
         }else {
             connection = ConnectionMock()
         }
+        connection?.addConnectionChangedDelegate(delegate: self)
+        connection?.open()
         self.initialize()
+        return true
     }
     
     func initialize() {

@@ -9,7 +9,7 @@ import Foundation
 
 enum CommandInterval : Double{
     case slow = 1
-    case fast = 0.1
+    case fast = 0.5
 }
 
 struct Subscription : Identifiable, Hashable {
@@ -36,8 +36,8 @@ class CommandSender: ObservableObject{
     var subscriptions: Set<Subscription> = []
     var timer100ms: Timer?
     var timer1s: Timer?
-    var manager: OBDManager
-    
+    var manager: ConnectionManager
+    var lastHeader:String? = nil
     var started: Bool {
         timer1s != nil && timer1s!.isValid;
     }
@@ -52,7 +52,7 @@ class CommandSender: ObservableObject{
     }
     
     init(){
-        manager = OBDManager.shared()
+        manager = ConnectionManager.shared()
     }
     
     func start(){
@@ -73,7 +73,11 @@ class CommandSender: ObservableObject{
     func sendCommands(subs: Set<Subscription>){
         let subsByHeader = Dictionary(grouping: subs) { $0.pid.header }
         for header in subsByHeader.keys {
-            self.manager.request(message: "ATSH\(header)")
+            if lastHeader != header {
+                self.manager.request(message: "ATSH\(header)")
+                self.manager.request(message: "STCFCPA\(header),\(header.replacingOccurrences(of: "FC", with: "FE"))")
+                lastHeader = header
+            }
             let subsByCommand = Dictionary(grouping: subsByHeader[header]!) { $0.pid.command }
             for command in subsByCommand.keys {
                 print("sending \(command)")

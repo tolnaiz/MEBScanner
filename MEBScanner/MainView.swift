@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
 
     @State private var selectedTab = 0
-    @StateObject var manager = OBDManager.shared()
+    @StateObject var manager = ConnectionManager.shared()
     
     var tabItems: [TabItem] = [
         TabItem(image: "gauge.with.dots.needle.bottom.50percent", label: "Dashboard", view: DashboardView(), tag: 0),

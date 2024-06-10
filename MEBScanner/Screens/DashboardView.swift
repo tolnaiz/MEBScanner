@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @EnvironmentObject var manager: OBDManager
+    @EnvironmentObject var manager: ConnectionManager
     @ObservedObject var viewModel = DashboardViewViewModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10){
-            HStack(alignment: .center){
-//                PRNDBStatus(status: viewModel.drivingMode).padding()
-                Spacer()
+            VStack(alignment: .center){
+                PRNDBStatus(status: viewModel.drivingMode).padding()
                 BatteryIndicator(
                     soc: viewModel.batterySoc,
                     operationMode: viewModel.operationMode,

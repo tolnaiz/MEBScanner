@@ -15,7 +15,7 @@ struct PID: Hashable {
         hasher.combine(command)
     }
     var command: String
-    var header: String = "FC007B"
+    var header: String = "17FC007B"
     var startByte: Int = 6
     var endByte: Int = 8
     var parse: (UInt32) -> Double = { (intValue) -> Double in
@@ -30,7 +30,7 @@ struct PID: Hashable {
         .operationMode: PID(command: "227448"),
         .rv: PID(command: "ATRV"),
         .circulationPumpHVBattery: PID(command: "22743B"),
-        .drivingMode: PID(command: "22210E", endByte: 10),
+        .drivingMode: PID(command: "22210E", header: "17FC0076", startByte: 8, endByte: 10),
 
         .batterySoc: PID(command: "22028C") { intValue in
             (Double(intValue))/2.55

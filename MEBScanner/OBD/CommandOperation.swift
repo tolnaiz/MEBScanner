@@ -40,6 +40,7 @@ class CommandOperation: Operation, StreamDelegate {
         switch eventCode {
        
         case Stream.Event.hasBytesAvailable:
+//            print("readInBackground called")
             self.readInBackground()
             break
             
@@ -103,6 +104,8 @@ class CommandOperation: Operation, StreamDelegate {
         bytesLeftToWrite -= bytesWritten
         bytes = bytes.advanced(by: bytesWritten)
         
+//        print(bytesWritten)
+        
         if bytesLeftToWrite > 0 {
             print("error: not enough space in stream")
             writeBuffer.insert(NSData(bytes: &bytes, length: bytesLeftToWrite), at: 0)
@@ -124,7 +127,7 @@ class CommandOperation: Operation, StreamDelegate {
     private func sendResponse(report: [UInt8]){
         var response = String(bytes: report, encoding: .isoLatin1)
         var rows = response!.components(separatedBy: "\r").filter({ $0 != ">" && $0 != ""})
-        print(rows)
+//        print(rows)
         
         if rows.count > 1 {
             rows = rows.map {

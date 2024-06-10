@@ -11,7 +11,7 @@ import ExternalAccessory
 import Combine
 
 struct TerminalView: View {
-    @EnvironmentObject var manager: OBDManager
+    @EnvironmentObject var manager: ConnectionManager
     @StateObject var viewModel = TerminalViewViewModel()
     
     var body: some View {
@@ -56,5 +56,5 @@ struct TerminalView: View {
 }
 
 #Preview {
-    TerminalView().environmentObject(OBDManager.shared())
+    TerminalView().environmentObject(ConnectionManager.shared())
 }

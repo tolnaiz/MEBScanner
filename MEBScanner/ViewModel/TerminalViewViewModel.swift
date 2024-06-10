@@ -8,12 +8,12 @@
 import Foundation
 
 class TerminalViewViewModel: ObservableObject {
-    @Published var manager : OBDManager
+    @Published var manager : ConnectionManager
     @Published var text = ""
     @Published var messages : [TerminalMessage] = []
     
     init(){
-        manager = OBDManager.shared()
+        manager = ConnectionManager.shared()
     }
     
     func send(){

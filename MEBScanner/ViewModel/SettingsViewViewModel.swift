@@ -35,10 +35,10 @@ class SettingsViewViewModel: ObservableObject {
     }
     var subscriptions: Set<Subscription> = []
     var sharedSender: CommandSender?
-    @Published var manager: OBDManager
+    @Published var manager: ConnectionManager
     
     init(){
-        manager = OBDManager.shared()
+        manager = ConnectionManager.shared()
     }
     // 22F40D
     

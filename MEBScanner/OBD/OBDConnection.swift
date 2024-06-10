@@ -3,14 +3,23 @@ import ExternalAccessory
 
 /// callback if the connection has changed
 public protocol ConnectionChangedDelegate: AnyObject {
-    func ConnectionChanged(connected: Bool)
+    func connectionChanged(connected: Bool)
 }
 
 protocol ReportDelegate {
     func reportReceived(report: [UInt8])
 }
 
-public class Connection : NSObject, StreamDelegate {
+protocol Connection {
+    func addConnectionChangedDelegate(delegate: ConnectionChangedDelegate)
+    func open()
+    func close()
+    func cancellAllOperations()
+    func write(str: String, action: ((String) -> Void)?)
+}
+
+public class OBDConnection : NSObject, StreamDelegate, Connection {
+    
     var accessory: EAAccessory
     var session: EASession?
     
@@ -50,7 +59,7 @@ public class Connection : NSObject, StreamDelegate {
             isClosed = false
             
             for del in self.connectionChangedDelegates {
-                del.ConnectionChanged(connected: true)
+                del.connectionChanged(connected: true)
             }
         }
     }
@@ -70,7 +79,7 @@ public class Connection : NSObject, StreamDelegate {
         }
         
         for del in self.connectionChangedDelegates{
-            del.ConnectionChanged(connected: false)
+            del.connectionChanged(connected: false)
         }
         
         obdQueue.cancelAllOperations()
@@ -98,6 +107,7 @@ public class Connection : NSObject, StreamDelegate {
             print("OperationQueue too long, skipping")
         } else{
             obdQueue.addOperation(request)
+//            print("adding to operationQueue")
         }
         
     }

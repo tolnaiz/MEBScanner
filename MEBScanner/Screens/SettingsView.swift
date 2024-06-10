@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var manager: OBDManager
+    @EnvironmentObject var manager: ConnectionManager
     @StateObject var viewModel = SettingsViewViewModel()
+    
+    @State private var showingAlert = false
     
     var body: some View {
         VStack(alignment: .leading){
@@ -25,23 +27,26 @@ struct SettingsView: View {
                     viewModel.ABRPDisconnect()
                 }).buttonStyle(.bordered).disabled(!viewModel.abrpConnected)
                 Spacer()
-                
             }
-//            Toggle(isOn: $manager.testMode, label: {
-//                Text("Test Mode")
-//            }).padding([.top, .bottom])
             Text("OBD connection").font(.largeTitle)
-            HStack{
-                Spacer()
-                Button("Connect",action: {
-                    manager.connect()
-                }).buttonStyle(.bordered).disabled(manager.connected)
-                Spacer()
-                Button("Disconnect",action: {
-                    manager.disconnect()
-                }).buttonStyle(.bordered).disabled(!manager.connected)
-                Spacer()
-                
+            VStack{
+                Toggle(isOn: $manager.testMode, label: {
+                    Text("Test Mode")
+                }).padding([.top, .bottom]).disabled(manager.connected)
+                HStack{
+                    Spacer()
+                    Button("Connect",action: {
+                        showingAlert = !manager.connect()
+                    }).alert("Error connecting to OBD device", isPresented: $showingAlert) {
+                       Button("OK", role: .cancel) { }
+                    }.buttonStyle(.bordered).disabled(manager.connected)
+                    Spacer()
+                    Button("Disconnect",action: {
+                        manager.disconnect()
+                    }).buttonStyle(.bordered).disabled(!manager.connected)
+                    Spacer()
+                    
+                }
             }
             Spacer()
             Text("Available devices:")
@@ -58,5 +63,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView().environmentObject(OBDManager.shared())
+    SettingsView().environmentObject(ConnectionManager.shared())
 }

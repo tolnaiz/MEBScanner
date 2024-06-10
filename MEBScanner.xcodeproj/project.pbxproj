@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		2E0FB20B2B61821000B7EBE2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FB20A2B61821000B7EBE2 /* MessageView.swift */; };
 		2E0FB20D2B6182C100B7EBE2 /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FB20C2B6182C100B7EBE2 /* TerminalView.swift */; };
-		2E0FB2462B63B28400B7EBE2 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FB2452B63B28400B7EBE2 /* Connection.swift */; };
-		2E0FB2482B63B81200B7EBE2 /* OBDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FB2472B63B81200B7EBE2 /* OBDManager.swift */; };
+		2E0FB2462B63B28400B7EBE2 /* OBDConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FB2452B63B28400B7EBE2 /* OBDConnection.swift */; };
+		2E0FB2482B63B81200B7EBE2 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FB2472B63B81200B7EBE2 /* ConnectionManager.swift */; };
 		2E10A3D82BC02EAB00B9D629 /* BatteryIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E10A3D72BC02EAB00B9D629 /* BatteryIndicator.swift */; };
-		2E26E7722BA657A500B52CB2 /* OBDManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E26E7712BA657A500B52CB2 /* OBDManagerMock.swift */; };
+		2E26E7722BA657A500B52CB2 /* ConnectionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E26E7712BA657A500B52CB2 /* ConnectionMock.swift */; };
 		2E26E7772BA6F8F500B52CB2 /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E26E7762BA6F8F500B52CB2 /* TabItem.swift */; };
 		2E26E7792BA70FC300B52CB2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E26E7782BA70FC300B52CB2 /* Extensions.swift */; };
 		2E4D54332BA8B95A00AA5C7B /* CircleGaugeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D54322BA8B95A00AA5C7B /* CircleGaugeStyle.swift */; };
@@ -39,11 +39,11 @@
 /* Begin PBXFileReference section */
 		2E0FB20A2B61821000B7EBE2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2E0FB20C2B6182C100B7EBE2 /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
-		2E0FB2452B63B28400B7EBE2 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
-		2E0FB2472B63B81200B7EBE2 /* OBDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBDManager.swift; sourceTree = "<group>"; };
+		2E0FB2452B63B28400B7EBE2 /* OBDConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBDConnection.swift; sourceTree = "<group>"; };
+		2E0FB2472B63B81200B7EBE2 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		2E0FB2492B641E0D00B7EBE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2E10A3D72BC02EAB00B9D629 /* BatteryIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryIndicator.swift; sourceTree = "<group>"; };
-		2E26E7712BA657A500B52CB2 /* OBDManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBDManagerMock.swift; sourceTree = "<group>"; };
+		2E26E7712BA657A500B52CB2 /* ConnectionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionMock.swift; sourceTree = "<group>"; };
 		2E26E7762BA6F8F500B52CB2 /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		2E26E7782BA70FC300B52CB2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2E4D54322BA8B95A00AA5C7B /* CircleGaugeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleGaugeStyle.swift; sourceTree = "<group>"; };
@@ -89,12 +89,12 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		2E26E7732BA657B200B52CB2 /* Mock */ = {
+		2E26E7732BA657B200B52CB2 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				2E26E7712BA657A500B52CB2 /* OBDManagerMock.swift */,
+				2E26E7712BA657A500B52CB2 /* ConnectionMock.swift */,
 			);
-			path = Mock;
+			path = Test;
 			sourceTree = "<group>";
 		};
 		2E26E7742BA6F83200B52CB2 /* Components */ = {
@@ -124,8 +124,8 @@
 		2EB4A7A12C0E200E007E22DE /* OBD */ = {
 			isa = PBXGroup;
 			children = (
-				2E0FB2472B63B81200B7EBE2 /* OBDManager.swift */,
-				2E0FB2452B63B28400B7EBE2 /* Connection.swift */,
+				2E0FB2472B63B81200B7EBE2 /* ConnectionManager.swift */,
+				2E0FB2452B63B28400B7EBE2 /* OBDConnection.swift */,
 				2E4D54362BA8BE6700AA5C7B /* PID.swift */,
 				2EB4A79F2C0DF99A007E22DE /* CommandOperation.swift */,
 			);
@@ -162,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				2E26E7752BA6F8B500B52CB2 /* Model */,
-				2E26E7732BA657B200B52CB2 /* Mock */,
+				2E26E7732BA657B200B52CB2 /* Test */,
 				2ED2E33D2B826F2E0043B8B7 /* ViewModel */,
 				2E26E7742BA6F83200B52CB2 /* Components */,
 				2E0FB2092B6181FD00B7EBE2 /* Screens */,
@@ -262,7 +262,7 @@
 				2ECCED8A2C0CC9C90000A892 /* PIDValue.swift in Sources */,
 				2ED2E33C2B8258F20043B8B7 /* TerminalMessage.swift in Sources */,
 				2ED2E3402B826F650043B8B7 /* TerminalViewViewModel.swift in Sources */,
-				2E26E7722BA657A500B52CB2 /* OBDManagerMock.swift in Sources */,
+				2E26E7722BA657A500B52CB2 /* ConnectionMock.swift in Sources */,
 				2E0FB20B2B61821000B7EBE2 /* MessageView.swift in Sources */,
 				2EB4A7A02C0DF99A007E22DE /* CommandOperation.swift in Sources */,
 				2ED2E3422B8B381E0043B8B7 /* SettingsView.swift in Sources */,
@@ -277,10 +277,10 @@
 				2E26E7792BA70FC300B52CB2 /* Extensions.swift in Sources */,
 				2EE433FF2B53032000D918CE /* MEBScannerApp.swift in Sources */,
 				2ED1D1992BAF359300ACD58D /* OperationModeView.swift in Sources */,
-				2E0FB2462B63B28400B7EBE2 /* Connection.swift in Sources */,
+				2E0FB2462B63B28400B7EBE2 /* OBDConnection.swift in Sources */,
 				2E4D54332BA8B95A00AA5C7B /* CircleGaugeStyle.swift in Sources */,
 				2ED2E3482B8BA09F0043B8B7 /* DashboardViewViewModel.swift in Sources */,
-				2E0FB2482B63B81200B7EBE2 /* OBDManager.swift in Sources */,
+				2E0FB2482B63B81200B7EBE2 /* ConnectionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
